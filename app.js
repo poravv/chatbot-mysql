@@ -2,7 +2,7 @@ const { createBot, createProvider, createFlow, addKeyword, EVENTS } = require('@
 require('dotenv').config();
 const QRPortalWeb = require('@bot-whatsapp/portal')
 const BaileysProvider = require('@bot-whatsapp/provider/baileys')
-const MysqlAdapter = require('@bot-whatsapp/database/mysql')
+//const MysqlAdapter = require('@bot-whatsapp/database/mysql')
 const MockAdapter = require('@bot-whatsapp/database/mock')
 const path = require('path')
 const fs = require('fs')
@@ -21,7 +21,7 @@ let itemProducto = '';
 let idusuario = '595994943370';
 //---------------------------------------------------------------
 
-const bienvenidaFlow = addKeyword(['hola', 'Hola', 'buenas', 'hello', 'holi', 'hole', 'buenos', '!consulta'])
+const bienvenidaFlow = addKeyword(['hola','Hola','pedido','Pedido','Consulta','consulta', '!consulta'])
     .addAnswer(bienvenida,
         { delay: 1000, }
     )
