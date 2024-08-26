@@ -18,6 +18,7 @@ const ItemsBienvenida = fs.readFileSync(itemsPath, 'utf-8');
 let clienteInfo = {};
 let pedido = [];
 let itemProducto = '';
+let idusuario = '595994943370';
 //---------------------------------------------------------------
 
 const bienvenidaFlow = addKeyword(['hola', 'Hola', 'buenas', 'hello', 'holi', 'hole', 'buenos', '!consulta'])
@@ -58,7 +59,7 @@ const flowAgregarProducto = addKeyword([EVENTS.ACTION])
             // Guardar el pedido en la base de datos
             try {
                 const connection = await pool.getConnection();
-                const [result] = await connection.query('INSERT INTO pedido (cliente, ruc, estado) VALUES (?, ?, ?)', [clienteInfo.nombre, clienteInfo.ruc, 'pendiente']);
+                const [result] = await connection.query('INSERT INTO pedido (cliente, ruc, idusuario, estado) VALUES (?, ?, ?, ?)', [clienteInfo.nombre, clienteInfo.ruc,idusuario, 'pendiente']);
                 const idpedido = result.insertId;
 
                 for (const item of pedido) {
