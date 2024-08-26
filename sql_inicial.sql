@@ -1,4 +1,7 @@
-CREATE TABLE pedido (
+
+CREATE SCHEMA `dbchatbot` ;
+
+CREATE TABLE dbchatbot.pedido (
     idpedido INT AUTO_INCREMENT PRIMARY KEY,
     cliente VARCHAR(255),
     ruc VARCHAR(20),
@@ -7,7 +10,7 @@ CREATE TABLE pedido (
     estado VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE det_pedido (
+CREATE TABLE dbchatbot.det_pedido (
     iddet_pedido INT AUTO_INCREMENT PRIMARY KEY,
     producto VARCHAR(255),
     cantidad VARCHAR(255),
@@ -15,12 +18,12 @@ CREATE TABLE det_pedido (
     FOREIGN KEY (idpedido) REFERENCES pedido(idpedido)
 );
 
-create view vw_pedidos as 
+create view dbchatbot.vw_pedidos as 
 select p.*,
 		pd.iddet_pedido,
         pd.producto,
         pd.cantidad
-from pedido p
-join det_pedido pd on pd.idpedido=p.idpedido;
+from dbchatbot.pedido p
+join dbchatbot.det_pedido pd on pd.idpedido=p.idpedido;
 
-select * from vw_pedidos;
+select * from dbchatbot.vw_pedidos;
