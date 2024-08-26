@@ -1,0 +1,426 @@
+[
+  {
+    "ref": "ans_f5484c48-c72d-4005-b763-cd4952562ba3",
+    "keyword": "key_f245e154-93c5-48d6-9e46-e232b6a155de",
+    "answer": "Buenas soy Dr. Ariel Santander Director Médico, Mis horarios de atención  para los alumnos  son: Lunes Marte y Miércoles de 8:00 a 17:00 hs déjame tus duda que en la brevedad estaré respondiendo.",
+    "options": {
+      "media": null,
+      "buttons": [],
+      "capture": false,
+      "child": null,
+      "delay": 3000,
+      "idle": null,
+      "ref": null,
+      "nested": [],
+      "keyword": {},
+      "callback": false
+    },
+    "refSerialize": "b169dee866ca55295869c84b13358603",
+    "from": "595992756462"
+  },
+  {
+    "ref": "ans_45fedf72-3f8a-4914-b102-43d4e1b29984",
+    "keyword": "ans_f5484c48-c72d-4005-b763-cd4952562ba3",
+    "answer": "Podrias indicarme de que año eres?\na) Soy alumno  del primer año\nb) Soy alumno del según  año\nc) Soy alumno  del tercer año\nd) Soy alumno  del cuarto año\ne) Soy alumno  del quinto año\nf) Soy alumno del sexto año\ng) Soy alumno de transferencia o regularizante\n0) Salir",
+    "options": {
+      "media": null,
+      "buttons": [],
+      "capture": true,
+      "child": null,
+      "delay": 5000,
+      "idle": null,
+      "ref": null,
+      "nested": [],
+      "keyword": {},
+      "callback": true
+    },
+    "refSerialize": "b6db9141d24c5e85396398a0121db508",
+    "from": "595992756462"
+  },
+  {
+    "ref": "b069e482-6d72-4ddd-8fdc-dc21ed2f6d4c",
+    "keyword": "b6db9141d24c5e85396398a0121db508",
+    "answer": "C",
+    "options": {},
+    "from": "595992756462",
+    "refSerialize": "00b13b7bd024b89ae8ba345c0691f0e8"
+  },
+  {
+    "ref": "ans_8ab9ba5a-14ef-4974-82fe-f4bf58e6e9cf",
+    "keyword": "key_a245e91e-5e77-492f-8184-dffce47fda6b",
+    "answer": "Tu consulta es: \nA) administrativa \nB) académica \nC) documentación \nD) inscripción\nE) otros ( favor especificar)\nF) Malla curricular\n0) Salir",
+    "options": {
+      "media": null,
+      "buttons": [],
+      "capture": true,
+      "child": null,
+      "delay": 0,
+      "idle": null,
+      "ref": null,
+      "nested": [],
+      "keyword": {},
+      "callback": true
+    },
+    "refSerialize": "ecbb56c836ca12e3f2c87925a9e255d7",
+    "from": "595992756462"
+  },
+  {
+    "ref": "c988c0a8-09b1-43e5-81dd-1ab73f51a743",
+    "keyword": "ecbb56c836ca12e3f2c87925a9e255d7",
+    "answer": "A",
+    "options": {},
+    "from": "595992756462",
+    "refSerialize": "dda4ec89253a208a2baea334f5233f20"
+  },
+  {
+    "ref": "ans_c0672928-eb9c-466f-a2c5-497c89af9d36",
+    "keyword": "key_32efbdb5-fb01-461f-b5ab-5e219ab89d35",
+    "answer": "Puedes comunicarte a https://wa.me/595992756462",
+    "options": {
+      "media": null,
+      "buttons": [],
+      "capture": false,
+      "child": null,
+      "delay": 0,
+      "idle": null,
+      "ref": null,
+      "nested": [],
+      "keyword": {},
+      "callback": false
+    },
+    "from": "595992756462"
+  },
+  {
+    "ref": "6b9be951-7dff-4591-a6b7-25947e79eaa5",
+    "answer": "Hola",
+    "options": {},
+    "from": "595992756462",
+    "refSerialize": "c22e4066d61d81721def9b25d8a397e8"
+  },
+  {
+    "ref": "ans_f5484c48-c72d-4005-b763-cd4952562ba3",
+    "keyword": "key_f245e154-93c5-48d6-9e46-e232b6a155de",
+    "answer": "Buenas soy Dr. Ariel Santander Director Médico, Mis horarios de atención  para los alumnos  son: Lunes Marte y Miércoles de 8:00 a 17:00 hs déjame tus duda que en la brevedad estaré respondiendo.",
+    "options": {
+      "media": null,
+      "buttons": [],
+      "capture": false,
+      "child": null,
+      "delay": 3000,
+      "idle": null,
+      "ref": null,
+      "nested": [],
+      "keyword": {},
+      "callback": false
+    },
+    "refSerialize": "b169dee866ca55295869c84b13358603",
+    "from": "595992756462"
+  },
+  {
+    "ref": "ans_45fedf72-3f8a-4914-b102-43d4e1b29984",
+    "keyword": "ans_f5484c48-c72d-4005-b763-cd4952562ba3",
+    "answer": "Podrias indicarme de que año eres?\na) Soy alumno  del primer año\nb) Soy alumno del según  año\nc) Soy alumno  del tercer año\nd) Soy alumno  del cuarto año\ne) Soy alumno  del quinto año\nf) Soy alumno del sexto año\ng) Soy alumno de transferencia o regularizante\n0) Salir",
+    "options": {
+      "media": null,
+      "buttons": [],
+      "capture": true,
+      "child": null,
+      "delay": 5000,
+      "idle": null,
+      "ref": null,
+      "nested": [],
+      "keyword": {},
+      "callback": true
+    },
+    "refSerialize": "b6db9141d24c5e85396398a0121db508",
+    "from": "595992756462"
+  },
+  {
+    "ref": "817b21d2-1c6a-4e0c-9881-95911c30fd17",
+    "keyword": "b6db9141d24c5e85396398a0121db508",
+    "answer": "C",
+    "options": {},
+    "from": "595992756462",
+    "refSerialize": "00b13b7bd024b89ae8ba345c0691f0e8"
+  },
+  {
+    "ref": "ans_8ab9ba5a-14ef-4974-82fe-f4bf58e6e9cf",
+    "keyword": "key_a245e91e-5e77-492f-8184-dffce47fda6b",
+    "answer": "Tu consulta es: \nA) administrativa \nB) académica \nC) documentación \nD) inscripción\nE) otros ( favor especificar)\nF) Malla curricular\n0) Salir",
+    "options": {
+      "media": null,
+      "buttons": [],
+      "capture": true,
+      "child": null,
+      "delay": 0,
+      "idle": null,
+      "ref": null,
+      "nested": [],
+      "keyword": {},
+      "callback": true
+    },
+    "refSerialize": "ecbb56c836ca12e3f2c87925a9e255d7",
+    "from": "595992756462"
+  },
+  {
+    "ref": "5f0a737b-c5ac-4d3e-85ba-0964dba6aeb3",
+    "keyword": "ecbb56c836ca12e3f2c87925a9e255d7",
+    "answer": "F",
+    "options": {},
+    "from": "595992756462",
+    "refSerialize": "a4bb96a8c3a8cb69dde68c980434d15c"
+  },
+  {
+    "ref": "ans_b748a4fe-a682-44c2-87fd-b0ace1a26a65",
+    "keyword": "key_9028d99d-6a88-43cd-b9a3-a49869236262",
+    "answer": "Aqui te facilito la malla curricular",
+    "options": {
+      "media": "https://imgv2-1-f.scribdassets.com/img/document/388490145/original/7e50eca805/1723633189?v=1",
+      "buttons": [],
+      "capture": false,
+      "child": null,
+      "delay": 2000,
+      "idle": null,
+      "ref": null,
+      "nested": [],
+      "keyword": {},
+      "callback": false
+    },
+    "refSerialize": "1dba7d65c4c3e4ac0a8ed8aa4b2e7463",
+    "from": "595992756462"
+  },
+  {
+    "ref": "6f5b8931-7620-40dd-90fe-6cf8494a3223",
+    "keyword": "1dba7d65c4c3e4ac0a8ed8aa4b2e7463",
+    "answer": "Hola",
+    "options": {},
+    "from": "595992756462",
+    "refSerialize": "c22e4066d61d81721def9b25d8a397e8"
+  },
+  {
+    "ref": "ans_f5484c48-c72d-4005-b763-cd4952562ba3",
+    "keyword": "key_f245e154-93c5-48d6-9e46-e232b6a155de",
+    "answer": "Buenas soy Dr. Ariel Santander Director Médico, Mis horarios de atención  para los alumnos  son: Lunes Marte y Miércoles de 8:00 a 17:00 hs déjame tus duda que en la brevedad estaré respondiendo.",
+    "options": {
+      "media": null,
+      "buttons": [],
+      "capture": false,
+      "child": null,
+      "delay": 3000,
+      "idle": null,
+      "ref": null,
+      "nested": [],
+      "keyword": {},
+      "callback": false
+    },
+    "refSerialize": "b169dee866ca55295869c84b13358603",
+    "from": "595992756462"
+  },
+  {
+    "ref": "ans_45fedf72-3f8a-4914-b102-43d4e1b29984",
+    "keyword": "ans_f5484c48-c72d-4005-b763-cd4952562ba3",
+    "answer": "Podrias indicarme de que año eres?\na) Soy alumno  del primer año\nb) Soy alumno del según  año\nc) Soy alumno  del tercer año\nd) Soy alumno  del cuarto año\ne) Soy alumno  del quinto año\nf) Soy alumno del sexto año\ng) Soy alumno de transferencia o regularizante\n0) Salir",
+    "options": {
+      "media": null,
+      "buttons": [],
+      "capture": true,
+      "child": null,
+      "delay": 5000,
+      "idle": null,
+      "ref": null,
+      "nested": [],
+      "keyword": {},
+      "callback": true
+    },
+    "refSerialize": "b6db9141d24c5e85396398a0121db508",
+    "from": "595992756462"
+  },
+  {
+    "ref": "7ec515cf-584d-492e-a181-39b479ccf723",
+    "keyword": "b6db9141d24c5e85396398a0121db508",
+    "answer": "C",
+    "options": {},
+    "from": "595992756462",
+    "refSerialize": "00b13b7bd024b89ae8ba345c0691f0e8"
+  },
+  {
+    "ref": "ans_8ab9ba5a-14ef-4974-82fe-f4bf58e6e9cf",
+    "keyword": "key_a245e91e-5e77-492f-8184-dffce47fda6b",
+    "answer": "Tu consulta es: \nA) administrativa \nB) académica \nC) documentación \nD) inscripción\nE) otros ( favor especificar)\nF) Malla curricular\n0) Salir",
+    "options": {
+      "media": null,
+      "buttons": [],
+      "capture": true,
+      "child": null,
+      "delay": 0,
+      "idle": null,
+      "ref": null,
+      "nested": [],
+      "keyword": {},
+      "callback": true
+    },
+    "refSerialize": "ecbb56c836ca12e3f2c87925a9e255d7",
+    "from": "595992756462"
+  },
+  {
+    "ref": "be9e467c-008b-4323-af58-eb2421f9e2ce",
+    "keyword": "ecbb56c836ca12e3f2c87925a9e255d7",
+    "answer": "B",
+    "options": {},
+    "from": "595992756462",
+    "refSerialize": "7d1f4c73fe1e92b549bdacd1e4381e5f"
+  },
+  {
+    "ref": "ans_b79e4275-aa25-4bab-81cb-a9f08dc53e71",
+    "keyword": "key_004949a8-c97e-468f-9a22-39d27c3ef786",
+    "answer": "Podrias darme el detalle de tu consulta?",
+    "options": {
+      "media": null,
+      "buttons": [],
+      "capture": true,
+      "child": null,
+      "delay": 0,
+      "idle": null,
+      "ref": null,
+      "nested": [],
+      "keyword": {},
+      "callback": true
+    },
+    "refSerialize": "966b3e4166801b0b818d4d2447356db2",
+    "from": "595992756462"
+  },
+  {
+    "ref": "0e82c33f-a9b1-47b6-a7d6-266efa1ac566",
+    "keyword": "966b3e4166801b0b818d4d2447356db2",
+    "answer": "Jdjdsjjajajsjsj",
+    "options": {},
+    "from": "595992756462",
+    "refSerialize": "410a2a87c59e0c60045c04ef17f1d18a"
+  },
+  {
+    "ref": "0749ed0d-8f57-4d63-85f2-4a3554348ec5",
+    "keyword": null,
+    "answer": "Gracias, te respondere la duda en la brevedad posible",
+    "options": {
+      "media": null,
+      "buttons": [],
+      "capture": false,
+      "delay": 0
+    },
+    "from": "595992756462",
+    "refSerialize": "049382bbf74cca1db58381ebe2190bb2"
+  },
+  {
+    "ref": "d5fa7ca2-52b2-4630-a29f-52c8be8abfa5",
+    "keyword": null,
+    "answer": "Saludos!",
+    "options": {
+      "media": null,
+      "buttons": [],
+      "capture": false,
+      "delay": 0
+    },
+    "from": "595992756462",
+    "refSerialize": "9cc637467cf1e7cdfc0e0f10874662d5"
+  },
+  {
+    "ref": "752a2ebe-f9d2-441d-948b-3068466709bd",
+    "keyword": "410a2a87c59e0c60045c04ef17f1d18a",
+    "answer": "Hola",
+    "options": {},
+    "from": "595992756462",
+    "refSerialize": "c22e4066d61d81721def9b25d8a397e8"
+  },
+  {
+    "ref": "ans_f5484c48-c72d-4005-b763-cd4952562ba3",
+    "keyword": "key_f245e154-93c5-48d6-9e46-e232b6a155de",
+    "answer": "Buenas soy Dr. Ariel Santander Director Médico, Mis horarios de atención  para los alumnos  son: Lunes Marte y Miércoles de 8:00 a 17:00 hs déjame tus duda que en la brevedad estaré respondiendo.",
+    "options": {
+      "media": null,
+      "buttons": [],
+      "capture": false,
+      "child": null,
+      "delay": 3000,
+      "idle": null,
+      "ref": null,
+      "nested": [],
+      "keyword": {},
+      "callback": false
+    },
+    "refSerialize": "b169dee866ca55295869c84b13358603",
+    "from": "595992756462"
+  },
+  {
+    "ref": "ans_45fedf72-3f8a-4914-b102-43d4e1b29984",
+    "keyword": "ans_f5484c48-c72d-4005-b763-cd4952562ba3",
+    "answer": "Podrias indicarme de que año eres?\na) Soy alumno  del primer año\nb) Soy alumno del según  año\nc) Soy alumno  del tercer año\nd) Soy alumno  del cuarto año\ne) Soy alumno  del quinto año\nf) Soy alumno del sexto año\ng) Soy alumno de transferencia o regularizante\n0) Salir",
+    "options": {
+      "media": null,
+      "buttons": [],
+      "capture": true,
+      "child": null,
+      "delay": 5000,
+      "idle": null,
+      "ref": null,
+      "nested": [],
+      "keyword": {},
+      "callback": true
+    },
+    "refSerialize": "b6db9141d24c5e85396398a0121db508",
+    "from": "595992756462"
+  },
+  {
+    "ref": "65c9cf6d-4a37-4874-bfcc-dda78791db5b",
+    "keyword": "b6db9141d24c5e85396398a0121db508",
+    "answer": "C",
+    "options": {},
+    "from": "595992756462",
+    "refSerialize": "00b13b7bd024b89ae8ba345c0691f0e8"
+  },
+  {
+    "ref": "ans_8ab9ba5a-14ef-4974-82fe-f4bf58e6e9cf",
+    "keyword": "key_a245e91e-5e77-492f-8184-dffce47fda6b",
+    "answer": "Tu consulta es: \nA) administrativa \nB) académica \nC) documentación \nD) inscripción\nE) otros ( favor especificar)\nF) Malla curricular\n0) Salir",
+    "options": {
+      "media": null,
+      "buttons": [],
+      "capture": true,
+      "child": null,
+      "delay": 0,
+      "idle": null,
+      "ref": null,
+      "nested": [],
+      "keyword": {},
+      "callback": true
+    },
+    "refSerialize": "ecbb56c836ca12e3f2c87925a9e255d7",
+    "from": "595992756462"
+  },
+  {
+    "ref": "29aab82f-8006-40f0-8321-618525e5dc65",
+    "keyword": "ecbb56c836ca12e3f2c87925a9e255d7",
+    "answer": "F",
+    "options": {},
+    "from": "595992756462",
+    "refSerialize": "a4bb96a8c3a8cb69dde68c980434d15c"
+  },
+  {
+    "ref": "ans_b748a4fe-a682-44c2-87fd-b0ace1a26a65",
+    "keyword": "key_9028d99d-6a88-43cd-b9a3-a49869236262",
+    "answer": "Aqui te facilito la malla curricular",
+    "options": {
+      "media": "https://imgv2-1-f.scribdassets.com/img/document/388490145/original/7e50eca805/1723633189?v=1",
+      "buttons": [],
+      "capture": false,
+      "child": null,
+      "delay": 2000,
+      "idle": null,
+      "ref": null,
+      "nested": [],
+      "keyword": {},
+      "callback": false
+    },
+    "refSerialize": "1dba7d65c4c3e4ac0a8ed8aa4b2e7463",
+    "from": "595992756462"
+  }
+]

@@ -1,0 +1,3 @@
+Quisieras: 
+A) Agregar pedido
+0) Finalizar
