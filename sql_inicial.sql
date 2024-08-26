@@ -7,6 +7,7 @@ CREATE TABLE dbchatbot.pedido (
     ruc VARCHAR(20),
     idusuario VARCHAR(100) NOT NULL,
     fecha_insercion DATETIME DEFAULT CURRENT_TIMESTAMP,
+    fecha_proceso DATETIME DEFAULT CURRENT_TIMESTAMP,
     estado VARCHAR(50) NOT NULL
 );
 
