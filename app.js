@@ -23,27 +23,23 @@ let idusuario = '595981586823';
 
 const bienvenidaFlow = addKeyword(['hola', 'Hola', 'Buenas', 'buenas', 'Buenos', 'buenos', 'pedido', 'Pedido', 'Consulta', 'consulta', '!consulta'])
     .addAnswer(
-        `🟢 Gracias por comunicarte con Suitex py 🫱🏽‍🫲🏾`,
+`🟢 Gracias por comunicarte con Suitex py 🫱🏽‍🫲🏾`,
         { delay: 1000, }
     ).addAnswer(
-        `🕥 Nuestro horario de atención son:
-        Lunes a Viernes de 09:00 hs a 12:00 hs y 13:00 hs a 18:00 hs.`,
+`🕥 Nuestro horario de atención son:
+Lunes a Viernes de 09:00 hs a 12:00 hs y 13:00 hs a 18:00 hs.
+Sabados de 09:00 hs a 12:00 hs y 13:00 hs a 18:00 hs.
+Domingos de 13:00 hs a 18:00 hs.`,
         { delay: 1000, }
     ).addAnswer(
-        `🕥 Sabados de 09:00 hs a 12:00 hs y 13:00 hs a 18:00 hs.`,
-        { delay: 1000, }
-    ).addAnswer(
-        `🕥 Domingos de 13:00 hs a 18:00 hs.`,
-        { delay: 1000, }
-    ).addAnswer(
-        `En que podemos ayudarte?
-         a) Solicitud de presupuesto.
-         b) Quiero hacer una consulta.
-         c) Necesito el catalogo.
-         d) Quisiera el sitio web.
-         e) Contactar con un vendedor.
-         0) Salir de contestador.
-        `,
+`En que podemos ayudarte?
+a) Solicitud de presupuesto.
+b) Quiero hacer una consulta.
+c) Necesito el catalogo.
+d) Quisiera el sitio web.
+e) Contactar con un vendedor.
+0) Salir de contestador.
+`,
         {
             capture: true,
             delay: 2000,
@@ -63,15 +59,15 @@ const bienvenidaFlow = addKeyword(['hola', 'Hola', 'Buenas', 'buenas', 'Buenos',
                     return gotoFlow(flowCatalogo);
                 case "d":
                     return await flowDynamic(
-                        `Nuestro sitio web es https://suitex.com.py/ 
-                        Si necesitas mas mas informacion puedes escribir !consulta.
-                        Muchas gracias`
+`Nuestro sitio web es 🌎 https://suitex.com.py/ 
+Si necesitas mas mas informacion puedes escribir !consulta.
+Muchas gracias`
                     );
                 case "e":
                     return await flowDynamic(
-                        `Puedes contactar con Isaias FernandesÑ 
-                        https://wa.me/595993645127    
-                        `
+`📞 Puedes contactar con Isaias Fernandes  
+https://wa.me/595993645127    
+`
                     );
                 case "0":
                     return await flowDynamic(
@@ -98,7 +94,7 @@ const flowAgregarProducto = addKeyword([EVENTS.ACTION])
             // Guardar el pedido en la base de datos
             try {
                 const connection = await pool.getConnection();
-                const [result] = await connection.query('INSERT INTO pedido (cliente, ruc, idusuario, estado) VALUES (?, ?, ?, ?)', [clienteInfo.nombre, clienteInfo.ruc, idusuario, 'pendiente']);
+                const [result] = await connection.query('INSERT INTO pedido (cliente, ruc, idusuario, estado) VALUES (?, ?, ?, ?)', [clienteInfo.nombre, clienteInfo.ruc, idusuario, 'Pendiente']);
                 const idpedido = result.insertId;
 
                 for (const item of pedido) {
