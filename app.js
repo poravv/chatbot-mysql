@@ -37,13 +37,13 @@ const bienvenidaFlow = addKeyword(['hola', 'Hola', 'Buenas', 'buenas', 'Buenos',
         { delay: 1000, }
     ).addAnswer(
         `En que podemos ayudarte?
-           a) Quiero solicitar un presupuesto.
-           b) Quiero hacer una consulta.
-           c) Necesito el catalogo.
-           d) Quisiera el sitio web.
-           e) Quiero contactar con un vendedor.
-           0) Salir de contestador.
-         `,
+         a) Solicitud de presupuesto.
+         b) Quiero hacer una consulta.
+         c) Necesito el catalogo.
+         d) Quisiera el sitio web.
+         e) Contactar con un vendedor.
+         0) Salir de contestador.
+        `,
         {
             capture: true,
             delay: 2000,
@@ -123,7 +123,7 @@ const flowConsulta = addKeyword([EVENTS.ACTION])
     })
 
 const flowProducto = addKeyword([EVENTS.ACTION])
-    .addAnswer('¿Cuál es el nombre del producto?', { capture: true }, async (ctx, ctxFn) => {
+    .addAnswer('¿Que tipo de prenda necesita?', { capture: true }, async (ctx, ctxFn) => {
         //ctxFn.producto = ctx.body; // Guardamos el nombre del producto en el contexto
         itemProducto = ctx.body;
         return ctxFn.gotoFlow(flowCantidad);
@@ -131,7 +131,7 @@ const flowProducto = addKeyword([EVENTS.ACTION])
 
 
 const flowRUC = addKeyword([EVENTS.ACTION])
-    .addAnswer('¿Cuál es tu RUC?', { capture: true }, async (ctx, ctxFn) => {
+    .addAnswer('¿Cuál es tu RUC o Cedula?', { capture: true }, async (ctx, ctxFn) => {
         clienteInfo.ruc = ctx.body;
         return ctxFn.gotoFlow(flowProducto);
     });

@@ -47,11 +47,6 @@ bower_components/
 # MacOS files
 .DS_Store
 
-# Docker files
-docker-compose.yml
-Dockerfile
-.dockerignore
-
 # Build directories
 dist/
 build/
