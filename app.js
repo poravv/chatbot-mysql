@@ -8,36 +8,35 @@ const MockAdapter = require('@bot-whatsapp/database/mock')
 //const fs = require('fs')
 const pool = require('./dbConfig');
 
-//const bienvenidaPath = path.join(__dirname, "mensajes", "Bienvenida.txt")
+//const bienvenidaPath = path.join(_dirname, "mensajes", "Bienvenida.txt")
 //const bienvenida = fs.readFileSync(bienvenidaPath, 'utf-8');
 
-//const itemsPath = path.join(__dirname, "mensajes", "ItemsBienvenida.txt")
+//const itemsPath = path.join(_dirname, "mensajes", "ItemsBienvenida.txt")
 //const ItemsBienvenida = fs.readFileSync(itemsPath, 'utf-8');
 
 //---------------------------------------------------------------
 let clienteInfo = {};
 let pedido = [];
 let itemProducto = '';
-let idusuario = '595981586823';
+let idusuario = '595992424757';
 //---------------------------------------------------------------
 
-const bienvenidaFlow = addKeyword(['hola', 'Hola', 'Buenas', 'buenas', 'Buenos', 'buenos', 'pedido', 'Pedido', 'Consulta', 'consulta', '!consulta'])
+const bienvenidaFlow = addKeyword(['hola', 'Hola', 'Buenas', 'buenas', 'Buenos', 'buenos', '!consulta'])
     .addAnswer(
-`🟢 Gracias por comunicarte con Suitex py 🫱🏽‍🫲🏾`,
+        `🍦 Gracias por comunicarte con Dolce Helados 🫱🏽‍🫲🏾`,
         { delay: 1000, }
     ).addAnswer(
-`🕥 Nuestro horario de atención son:
-Lunes a Viernes de 09:00 hs a 12:00 hs y 13:00 hs a 18:00 hs.
-Sabados de 09:00 hs a 12:00 hs y 13:00 hs a 18:00 hs.
-Domingos de 13:00 hs a 18:00 hs.`,
+        `🕥 Nuestro horario de atención son:
+☑ Lunes a Viernes de 09:00 hs a 12:00 hs y 13:00 hs a 18:00 hs.
+☑ Sabados de 09:00 hs a 12:00 hs y 13:00 hs a 18:00 hs.
+☑ Domingos de 13:00 hs a 18:00 hs.`,
         { delay: 1000, }
     ).addAnswer(
-`En que podemos ayudarte?
-a) Solicitud de presupuesto.
-b) Quiero hacer una consulta.
-c) Necesito el catalogo.
-d) Quisiera el sitio web.
-e) Contactar con un vendedor.
+        `En que podemos ayudarte?
+A) Realizar pedido.
+B) Quiero hacer una consulta.
+C) Necesito el catalogo.
+D) Contactar con un asesor.
 0) Salir de contestador.
 `,
         {
@@ -45,7 +44,7 @@ e) Contactar con un vendedor.
             delay: 2000,
         },
         async (ctx, { gotoFlow, fallBack, flowDynamic }) => {
-            if (!["a", "b", "c", "d", "e", "0"].includes(ctx.body.toLowerCase())) {
+            if (!["a", "b", "c", "d", "0"].includes(ctx.body.toLowerCase())) {
                 return fallBack(
                     "🔴 Respuesta no válida, por favor selecciona una de las opciones."
                 );
@@ -58,30 +57,26 @@ e) Contactar con un vendedor.
                 case "c":
                     return gotoFlow(flowCatalogo);
                 case "d":
-                    return await flowDynamic(
-`Nuestro sitio web es 🌎 https://suitex.com.py/ 
-Si necesitas mas mas informacion puedes escribir !consulta.
-Muchas gracias`
-                    );
-                case "e":
-                    return await flowDynamic(
-`📞 Puedes contactar con Isaias Fernandes  
-https://wa.me/595993645127    
-`
-                    );
+                    return gotoFlow(flowAsesor);
                 case "0":
                     return await flowDynamic(
-                        "Saliendo... Puedes volver a acceder a este chat escribiendo !consulta"
+                        "_Saliendo... Puedes volver a acceder al contestador enviando !consulta_"
                     );
             }
         }
     );
 
 const flowCatalogo = addKeyword(EVENTS.ACTION)
-    .addAnswer('Puedes ingresar a nuestro sitio web https://suitex.com.py/ y la opción tienda, alli encontraras una variedad de prendas.', {
-        //delay: 1000,
-        //media: "https://imgv2-1-f.scribdassets.com/img/document/388490145/original/7e50eca805/1723633189?v=1"
-    })
+    .addAnswer(
+`Gracias por comunicarte con nosotros.
+Envio del catalogo 📑 en proceso.
+_Puedes volver a acceder al contestador enviando !consulta_`
+    )
+    .addAnswer('Aqui el catalogo.'
+        , {
+            //delay: 1000,
+            media: "https://mindtechpy.net/files_upload/catalogo_dolce_helados.pdf"
+        })
 
 const flowAgregarProducto = addKeyword([EVENTS.ACTION])
     .addAnswer('¿Quieres agregar otro producto? (sí/no)', { capture: true }, async (ctx, ctxFn) => {
@@ -94,15 +89,13 @@ const flowAgregarProducto = addKeyword([EVENTS.ACTION])
             // Guardar el pedido en la base de datos
             try {
                 const connection = await pool.getConnection();
-                const [result] = await connection.query('INSERT INTO pedido (cliente, ruc, idusuario, numero, estado) VALUES (?, ?, ?, ?, ?)', [clienteInfo.nombre, clienteInfo.ruc, idusuario, ctx.from, 'Pendiente']);
+                const [result] = await connection.query('INSERT INTO pedido (cliente, ruc, idusuario, numero, estado) VALUES (?, ?, ?, ?, ?)', [clienteInfo.nombre, clienteInfo.ruc, idusuario, ctx.from??'null', 'Pendiente']);
                 const idpedido = result.insertId;
 
                 for (const item of pedido) {
                     await connection.query('INSERT INTO det_pedido (producto, cantidad, idpedido) VALUES (?, ?, ?)', [item.producto, item.cantidad, idpedido]);
                 }
-
                 pedido = [];
-
                 connection.release();
                 console.log('Pedido guardado en la base de datos con éxito.');
             } catch (error) {
@@ -118,32 +111,63 @@ const flowConsulta = addKeyword([EVENTS.ACTION])
         await ctxFn.flowDynamic("Saludos!")
     })
 
+const flowAsesor = addKeyword([EVENTS.ACTION])
+    .addAnswer('Puedes comunicarte con Arturo Villasboa al https://wa.me/595992424757/', { capture: true }, async (ctx, ctxFn) => {
+    })
+
 const flowProducto = addKeyword([EVENTS.ACTION])
-    .addAnswer('¿Que tipo de prenda necesita?', { capture: true }, async (ctx, ctxFn) => {
-        //ctxFn.producto = ctx.body; // Guardamos el nombre del producto en el contexto
-        itemProducto = ctx.body;
-        return ctxFn.gotoFlow(flowCantidad);
-    });
+    .addAnswer(
+`Podria indicarme el producto que desea. 
+_Para cancelar responda 0_`
+        , { capture: true }, async (ctx, ctxFn) => {
+            if (ctx.body.toLowerCase() == "0") {
+                await ctxFn.flowDynamic("Gracias por comunicarte, si desea volver a generar el contestador envie !consulta")
+            } else {
+                itemProducto = ctx.body;
+                return ctxFn.gotoFlow(flowCantidad);
+            }
+        });
 
 
 const flowRUC = addKeyword([EVENTS.ACTION])
-    .addAnswer('¿Cuál es tu RUC o Cedula?', { capture: true }, async (ctx, ctxFn) => {
-        clienteInfo.ruc = ctx.body;
-        return ctxFn.gotoFlow(flowProducto);
-    });
+    .addAnswer(
+`¿Cuál es tu RUC o Cedula? 
+_Para cancelar responda 0_`, { capture: true },
+        async (ctx, ctxFn) => {
+            if (ctx.body.toLowerCase() == "0") {
+                await ctxFn.flowDynamic("Gracias por comunicarte, si desea volver a generar el contestador envie !consulta_")
+            } else {
+                clienteInfo.ruc = ctx.body;
+                return ctxFn.gotoFlow(flowProducto);
+            }
+        });
 
 const flowCliente = addKeyword([EVENTS.ACTION])
-    .addAnswer('¿Podrías facilitarme tu nombre de cliente?', { capture: true }, async (ctx, ctxFn) => {
-        clienteInfo.nombre = ctx.body;
-        return ctxFn.gotoFlow(flowRUC);
+    .addAnswer(
+`¿Podrías facilitarme tu nombre de cliente? 
+_Para cancelar responda 0_`
+        , { capture: true }, async (ctx, ctxFn) => {
+        if (ctx.body.toLowerCase() == "0") {
+            await ctxFn.flowDynamic("_Gracias por comunicarte, si desea volver a generar el contestador envie !consulta_")
+        } else {
+            clienteInfo.nombre = ctx.body;
+            return ctxFn.gotoFlow(flowRUC);
+        }
     });
 
 const flowCantidad = addKeyword([EVENTS.ACTION])
-    .addAnswer('¿Cuál es la cantidad que necesita?', { capture: true }, async (ctx, ctxFn) => {
-        const cantidad = ctx.body;
-        pedido.push({ producto: itemProducto, cantidad });
-        itemProducto = '';
-        return ctxFn.gotoFlow(flowAgregarProducto);
+    .addAnswer(
+`¿Cuál es la cantidad que necesita? 
+_Para cancelar responda 0_`
+        , { capture: true }, async (ctx, ctxFn) => {
+        if (ctx.body.toLowerCase() == "0") {
+            await ctxFn.flowDynamic("_Gracias por comunicarte, si desea volver a generar el contestador envie !consulta_")
+        } else {
+            const cantidad = ctx.body;
+            pedido.push({ producto: itemProducto, cantidad });
+            itemProducto = '';
+            return ctxFn.gotoFlow(flowAgregarProducto);
+        }
     });
 
 const main = async () => {
@@ -165,7 +189,8 @@ const main = async () => {
         flowAgregarProducto,
         flowCantidad,
         flowConsulta,
-        flowCatalogo
+        flowCatalogo,
+        flowAsesor
     ])
     const adapterProvider = createProvider(BaileysProvider)
 
