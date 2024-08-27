@@ -5,6 +5,7 @@ CREATE TABLE dbchatbot.pedido (
     idpedido INT AUTO_INCREMENT PRIMARY KEY,
     cliente VARCHAR(255),
     ruc VARCHAR(20),
+    numero VARCHAR(100),
     idusuario VARCHAR(100) NOT NULL,
     fecha_insercion DATETIME DEFAULT CURRENT_TIMESTAMP,
     fecha_proceso DATETIME DEFAULT CURRENT_TIMESTAMP,

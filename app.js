@@ -94,7 +94,7 @@ const flowAgregarProducto = addKeyword([EVENTS.ACTION])
             // Guardar el pedido en la base de datos
             try {
                 const connection = await pool.getConnection();
-                const [result] = await connection.query('INSERT INTO pedido (cliente, ruc, idusuario, estado) VALUES (?, ?, ?, ?)', [clienteInfo.nombre, clienteInfo.ruc, idusuario, 'Pendiente']);
+                const [result] = await connection.query('INSERT INTO pedido (cliente, ruc, idusuario, numero, estado) VALUES (?, ?, ?, ?, ?)', [clienteInfo.nombre, clienteInfo.ruc, idusuario, ctx.from, 'Pendiente']);
                 const idpedido = result.insertId;
 
                 for (const item of pedido) {
