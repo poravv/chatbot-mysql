@@ -4,16 +4,7 @@ const QRPortalWeb = require('@bot-whatsapp/portal')
 const BaileysProvider = require('@bot-whatsapp/provider/baileys')
 //const MysqlAdapter = require('@bot-whatsapp/database/mysql')
 const MockAdapter = require('@bot-whatsapp/database/mock')
-//const path = require('path')
-//const fs = require('fs')
 const pool = require('./dbConfig');
-
-//const bienvenidaPath = path.join(_dirname, "mensajes", "Bienvenida.txt")
-//const bienvenida = fs.readFileSync(bienvenidaPath, 'utf-8');
-
-//const itemsPath = path.join(_dirname, "mensajes", "ItemsBienvenida.txt")
-//const ItemsBienvenida = fs.readFileSync(itemsPath, 'utf-8');
-
 //---------------------------------------------------------------
 let clienteInfo = {};
 let pedido = [];
@@ -21,7 +12,31 @@ let itemProducto = '';
 let idusuario = '595992424757';
 //---------------------------------------------------------------
 
-const bienvenidaFlow = addKeyword(['hola', 'Hola', 'Buenas', 'buenas', 'Buenos', 'buenos', '!consulta'])
+const flowInicial = addKeyword(['hola', 'Hola', 'Buenas', 'buenas', 'Buenos', 'buenos', '!consulta'])
+    .addAction(async (ctx, { gotoFlow, state }) => {
+        const myState = state?.getMyState();
+        //console.log('Estado actual:', myState);
+
+        if (myState && myState.iniciado) {
+            // Verifica el estado actual del usuario y redirige según sea necesario
+            if (myState.enCurso) {
+                console.log('Conversación en curso, continuando...');
+                // Continuar desde el punto en el que se quedó
+                // Por ejemplo, podrías redirigir a un flujo específico basado en `myState.enCurso`
+                return gotoFlow(myState.enCurso);
+            } else {
+                // Si no hay un flujo en curso, redirige a la bienvenida o al punto inicial
+                return gotoFlow(bienvenidaFlow);
+            }
+        } else {
+            // Estado no encontrado, iniciar conversación
+            await state.update({ iniciado: true, enCurso: bienvenidaFlow });
+            return gotoFlow(bienvenidaFlow);
+
+        }
+    });
+
+const bienvenidaFlow = addKeyword([EVENTS.ACTION])
     .addAnswer(
         `🍦 Gracias por comunicarte con Dolce Helados 🫱🏽‍🫲🏾`,
         { delay: 1000, }
@@ -43,32 +58,36 @@ D) Contactar con un asesor.
             capture: true,
             delay: 2000,
         },
-        async (ctx, { gotoFlow, fallBack, flowDynamic }) => {
+        async (ctx, { gotoFlow, fallBack, flowDynamic, state }) => {
             if (!["a", "b", "c", "d", "0"].includes(ctx.body.toLowerCase())) {
                 return fallBack(
-                    "🔴 Respuesta no válida, por favor selecciona una de las opciones."
+                    `🔴 Respuesta no válida, por favor selecciona una de las opciones.`
                 );
             }
             switch (ctx.body.toLowerCase()) {
                 case "a":
+                    await state.update({ enCurso: flowCliente });
                     return gotoFlow(flowCliente);
                 case "b":
+                    await state.update({ enCurso: flowConsulta });
                     return gotoFlow(flowConsulta);
                 case "c":
+                    await state.update({ enCurso: flowCatalogo });
                     return gotoFlow(flowCatalogo);
                 case "d":
+                    await state.update({ enCurso: flowAsesor });
                     return gotoFlow(flowAsesor);
                 case "0":
-                    return await flowDynamic(
-                        "_Saliendo... Puedes volver a acceder al contestador enviando !consulta_"
-                    );
+                    await flowDynamic("_Saliendo... Puedes volver a acceder al contestador enviando !consulta_");
+                    await state.update({ iniciado: false, enCurso: null });
+                    break;
             }
         }
     );
 
 const flowCatalogo = addKeyword(EVENTS.ACTION)
     .addAnswer(
-`Gracias por comunicarte con nosotros.
+        `Gracias por comunicarte con nosotros.
 Envio del catalogo 📑 en proceso.
 _Puedes volver a acceder al contestador enviando !consulta_`
     )
@@ -76,20 +95,23 @@ _Puedes volver a acceder al contestador enviando !consulta_`
         , {
             //delay: 1000,
             media: "https://mindtechpy.net/files_upload/catalogo_dolce_helados.pdf"
+        }, async (ctx, { state }) => {
+            await state.update({ iniciado: false, enCurso: null });
         })
 
 const flowAgregarProducto = addKeyword([EVENTS.ACTION])
-    .addAnswer('¿Quieres agregar otro producto? (sí/no)', { capture: true }, async (ctx, ctxFn) => {
+    .addAnswer('¿Quieres agregar otro producto? (sí/no)', { capture: true }, async (ctx, { flowDynamic, state, gotoFlow }) => {
         if (ctx.body.toLowerCase() === 'sí' || ctx.body.toLowerCase() === 'si') {
-            await ctxFn.flowDynamic('Vamos a agregar otro producto.');
-            return ctxFn.gotoFlow(flowProducto);
+            await flowDynamic('Vamos a agregar otro producto.');
+            await state.update({ enCurso: flowProducto });
+            return gotoFlow(flowProducto);
         } else {
-            await ctxFn.flowDynamic('Gracias, tu pedido ha sido registrado.');
+            await flowDynamic('Gracias, tu pedido ha sido registrado.');
             console.log('Pedido completo:', pedido);
             // Guardar el pedido en la base de datos
             try {
                 const connection = await pool.getConnection();
-                const [result] = await connection.query('INSERT INTO pedido (cliente, ruc, idusuario, numero, estado) VALUES (?, ?, ?, ?, ?)', [clienteInfo.nombre, clienteInfo.ruc, idusuario, ctx.from??'null', 'Pendiente']);
+                const [result] = await connection.query('INSERT INTO pedido (cliente, ruc, idusuario, numero, estado) VALUES (?, ?, ?, ?, ?)', [clienteInfo.nombre, clienteInfo.ruc, idusuario, ctx.from ?? 'null', 'Pendiente']);
                 const idpedido = result.insertId;
 
                 for (const item of pedido) {
@@ -98,77 +120,88 @@ const flowAgregarProducto = addKeyword([EVENTS.ACTION])
                 pedido = [];
                 connection.release();
                 console.log('Pedido guardado en la base de datos con éxito.');
+                await state.update({ iniciado: false, enCurso: null });
             } catch (error) {
                 console.error('Error al guardar el pedido en la base de datos:', error);
+                await state.update({ iniciado: false, enCurso: null });
             }
         }
     });
 
 const flowConsulta = addKeyword([EVENTS.ACTION])
-    .addAnswer('Podrias darme el detalle de tu consulta?', { capture: true }, async (ctx, ctxFn) => {
+    .addAnswer('Podrias darme el detalle de tu consulta?', { capture: true }, async (ctx, { flowDynamic, state }) => {
         //const consulta = ctx.body;
-        await ctxFn.flowDynamic("Gracias, te respondere la duda en la brevedad posible")
-        await ctxFn.flowDynamic("Saludos!")
+        await flowDynamic("Gracias, te respondere la duda en la brevedad posible")
+        await flowDynamic("Saludos!")
+        await state.update({ iniciado: false, enCurso: null });
     })
 
 const flowAsesor = addKeyword([EVENTS.ACTION])
-    .addAnswer('Puedes comunicarte con Arturo Villasboa al https://wa.me/595992424757/', { capture: true }, async (ctx, ctxFn) => {
+    .addAnswer('Puedes comunicarte con Arturo Villasboa al https://wa.me/595992424757/', { capture: true }, async (ctx, { state }) => {
+        await state.update({ iniciado: false, enCurso: null });
     })
 
 const flowProducto = addKeyword([EVENTS.ACTION])
     .addAnswer(
-`Podria indicarme el producto que desea. 
+        `Podria indicarme el producto que desea. 
 _Para cancelar responda 0_`
-        , { capture: true }, async (ctx, ctxFn) => {
+        , { capture: true }, async (ctx, { gotoFlow, state, flowDynamic }) => {
+
+            console.log(state?.getMyState())
+
             if (ctx.body.toLowerCase() == "0") {
-                await ctxFn.flowDynamic("Gracias por comunicarte, si desea volver a generar el contestador envie !consulta")
+                await state.update({ iniciado: false, enCurso: null });
+                await flowDynamic("Gracias por comunicarte, si desea volver a generar el contestador envie !consulta")
             } else {
                 itemProducto = ctx.body;
-                return ctxFn.gotoFlow(flowCantidad);
+                return gotoFlow(flowCantidad);
             }
         });
 
 
 const flowRUC = addKeyword([EVENTS.ACTION])
     .addAnswer(
-`¿Cuál es tu RUC o Cedula? 
+        `¿Cuál es tu RUC o Cedula? 
 _Para cancelar responda 0_`, { capture: true },
-        async (ctx, ctxFn) => {
+        async (ctx, { state, flowDynamic, gotoFlow }) => {
             if (ctx.body.toLowerCase() == "0") {
-                await ctxFn.flowDynamic("Gracias por comunicarte, si desea volver a generar el contestador envie !consulta_")
+                await state.update({ iniciado: false, enCurso: null });
+                await flowDynamic("Gracias por comunicarte, si desea volver a generar el contestador envie !consulta_")
             } else {
                 clienteInfo.ruc = ctx.body;
-                return ctxFn.gotoFlow(flowProducto);
+                return gotoFlow(flowProducto);
             }
         });
 
 const flowCliente = addKeyword([EVENTS.ACTION])
     .addAnswer(
-`¿Podrías facilitarme tu nombre de cliente? 
+        `¿Podrías facilitarme tu nombre de cliente? 
 _Para cancelar responda 0_`
-        , { capture: true }, async (ctx, ctxFn) => {
-        if (ctx.body.toLowerCase() == "0") {
-            await ctxFn.flowDynamic("_Gracias por comunicarte, si desea volver a generar el contestador envie !consulta_")
-        } else {
-            clienteInfo.nombre = ctx.body;
-            return ctxFn.gotoFlow(flowRUC);
-        }
-    });
+        , { capture: true }, async (ctx, { flowDynamic, gotoFlow, state }) => {
+            if (ctx.body.toLowerCase() == "0") {
+                await state.update({ iniciado: false, enCurso: null });
+                await flowDynamic("_Gracias por comunicarte, si desea volver a generar el contestador envie !consulta_")
+            } else {
+                clienteInfo.nombre = ctx.body;
+                return gotoFlow(flowRUC);
+            }
+        });
 
 const flowCantidad = addKeyword([EVENTS.ACTION])
     .addAnswer(
-`¿Cuál es la cantidad que necesita? 
+        `¿Cuál es la cantidad que necesita? 
 _Para cancelar responda 0_`
-        , { capture: true }, async (ctx, ctxFn) => {
-        if (ctx.body.toLowerCase() == "0") {
-            await ctxFn.flowDynamic("_Gracias por comunicarte, si desea volver a generar el contestador envie !consulta_")
-        } else {
-            const cantidad = ctx.body;
-            pedido.push({ producto: itemProducto, cantidad });
-            itemProducto = '';
-            return ctxFn.gotoFlow(flowAgregarProducto);
-        }
-    });
+        , { capture: true }, async (ctx, { state, flowDynamic, gotoFlow }) => {
+            if (ctx.body.toLowerCase() == "0") {
+                await state.update({ iniciado: false, enCurso: null });
+                await flowDynamic("_Gracias por comunicarte, si desea volver a generar el contestador envie !consulta_")
+            } else {
+                const cantidad = ctx.body;
+                pedido.push({ producto: itemProducto, cantidad });
+                itemProducto = '';
+                return gotoFlow(flowAgregarProducto);
+            }
+        });
 
 const main = async () => {
     /*
@@ -190,7 +223,8 @@ const main = async () => {
         flowCantidad,
         flowConsulta,
         flowCatalogo,
-        flowAsesor
+        flowAsesor,
+        flowInicial
     ])
     const adapterProvider = createProvider(BaileysProvider)
 
