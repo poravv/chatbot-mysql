@@ -12,5 +12,5 @@ CMD ["npm", "start"]
 #sudo docker build -t chatbot-dolce-helados .
 
 # Ejecutar el contenedor Docker
-#sudo docker run -e RAILWAY_STATIC_URL=http://localhost -e PUBLIC_URL=http://localhost -e PORT=3002 -p 3002:3002 --name chat-dolce-helados chatbot-dolce-helados
+#sudo docker run -e RAILWAY_STATIC_URL=http://localhost -e PUBLIC_URL=http://localhost -e PORT=3002 -p 3002:3000 --name chat-dolce-helados chatbot-dolce-helados
 
