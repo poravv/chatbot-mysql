@@ -1,5 +1,5 @@
 
-CREATE SCHEMA `dbchatbot` ;
+CREATE SCHEMA `dbchatbot`;
 
 CREATE TABLE dbchatbot.pedido (
     idpedido INT AUTO_INCREMENT PRIMARY KEY,
@@ -29,3 +29,13 @@ from dbchatbot.pedido p
 join dbchatbot.det_pedido pd on pd.idpedido=p.idpedido;
 
 select * from dbchatbot.vw_pedidos;
+
+CREATE TABLE dbchatbot.det_consulta (
+    idconsulta INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    apellido VARCHAR(255) NOT NULL,
+    fecha_insercion DATETIME DEFAULT CURRENT_TIMESTAMP,
+    fecha_procesado DATETIME,
+    estado VARCHAR(50),
+    consulta TEXT
+);

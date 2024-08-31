@@ -150,17 +150,14 @@ const flowAsesor = addKeyword([EVENTS.ACTION])
 
 const flowProducto = addKeyword([EVENTS.ACTION])
     .addAnswer(
-        `Podria indicarme el producto que desea. 
+`Podria indicarme el producto que desea. 
 _Para cancelar responda 0_`
         , { capture: true }, async (ctx, { gotoFlow, state, flowDynamic }) => {
-
-            console.log(state?.getMyState())
-
             if (ctx.body.toLowerCase() == "0") {
                 await state.update({ iniciado: false, enCurso: null });
                 await flowDynamic("Gracias por comunicarte, si desea volver a generar el contestador envie !consulta")
             } else {
-                itemProducto = ctx.body;
+                await state.update({ enCurso: flowCantidad });
                 return gotoFlow(flowCantidad);
             }
         });
@@ -244,7 +241,7 @@ const main = async () => {
     //QRPortalWeb();
     // Ruta para servir el archivo PNG del QR
     app.get('/qr', (req, res) => {
-        const qrPath = path.join(__dirname,'bot.qr.png'); // Ajusta la ruta según tu estructura de carpetas
+        const qrPath = path.join(__dirname, 'bot.qr.png'); // Ajusta la ruta según tu estructura de carpetas
         res.sendFile(qrPath);
     });
 

@@ -55,6 +55,8 @@ build/
 tmp/
 temp/
 
+docker-compose.yml
+
 # Other
 *.swp
 *.bak
