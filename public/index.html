@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enlazar Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #qr {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bienvenido</h1>
+    <p>Escanea el QR en tu dispositivo para enlazar el chatbot</p>
+    <div id="qr">
+        <img id="qrImage" src="/qr" alt="QR Code">
+    </div>
+    <script>
+        async function fetchQR() {
+            const response = await fetch('/qr');
+            const qrImage = document.getElementById('qrImage');
+            qrImage.src = '/qr?' + new Date().getTime(); // Añadir un timestamp para evitar el caché
+        }
+        // Llamar a fetchQR cada cierto tiempo para actualizar el QR
+        setInterval(fetchQR, 60000); // Actualizar cada 60 segundos
+    </script>
+</body>
+</html>

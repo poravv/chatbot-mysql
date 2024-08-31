@@ -5,6 +5,14 @@ const BaileysProvider = require('@bot-whatsapp/provider/baileys')
 //const MysqlAdapter = require('@bot-whatsapp/database/mysql')
 const MockAdapter = require('@bot-whatsapp/database/mock')
 const pool = require('./dbConfig');
+const express = require('express');
+const path = require('path');
+
+const app = express();
+const port = 3000;
+
+app.use(express.static('public'));
+
 //---------------------------------------------------------------
 let clienteInfo = {};
 let pedido = [];
@@ -16,7 +24,6 @@ const flowInicial = addKeyword(['hola', 'Hola', 'Buenas', 'buenas', 'Buenos', 'b
     .addAction(async (ctx, { gotoFlow, state }) => {
         const myState = state?.getMyState();
         //console.log('Estado actual:', myState);
-
         if (myState && myState.iniciado) {
             // Verifica el estado actual del usuario y redirige según sea necesario
             if (myState.enCurso) {
@@ -234,7 +241,18 @@ const main = async () => {
         database: adapterDB,
     });
 
-    QRPortalWeb();
+    //QRPortalWeb();
+    // Ruta para servir el archivo PNG del QR
+    app.get('/qr', (req, res) => {
+        const qrPath = path.join(__dirname,'bot.qr.png'); // Ajusta la ruta según tu estructura de carpetas
+        res.sendFile(qrPath);
+    });
+
+    app.listen(port, () => {
+        console.log(`Servidor escuchando en http://localhost:${port}`);
+    });
+
+    //QRPortalWeb()
 }
 
 main()
